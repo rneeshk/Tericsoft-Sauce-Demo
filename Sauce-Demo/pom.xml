@@ -1,21 +1,22 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-         
     <modelVersion>4.0.0</modelVersion>
-    <groupId>Sauce-Demo</groupId>
-    <artifactId>Sauce-Demo</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+
+    <groupId>com.example</groupId>
+    <artifactId>saucedemo-testng-allure</artifactId>
+    <version>1.0-SNAPSHOT</version>
 
     <properties>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
-        <aspectj.version>1.9.21</aspectj.version>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        <aspectj.version>1.9.7</aspectj.version> 
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <surefire.plugin.version>3.1.2</surefire.plugin.version>
     </properties>
 
     <dependencies>
-
-        <!-- Selenium -->
+        <!-- Selenium WebDriver -->
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
@@ -30,33 +31,31 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- Java Faker -->
-        <dependency>
-            <groupId>com.github.javafaker</groupId>
-            <artifactId>javafaker</artifactId>
-            <version>1.0.2</version>
-        </dependency>
-
-        <!-- Allure with TestNG -->
+        <!-- Allure TestNG Adapter -->
         <dependency>
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-testng</artifactId>
             <version>2.29.1</version>
         </dependency>
 
-        <!-- AspectJ Weaver (needed for Allure) -->
+        <!-- JavaFaker for test data -->
         <dependency>
-            <groupId>org.aspectj</groupId>
-            <artifactId>aspectjweaver</artifactId>
-            <version>1.9.24</version>
+            <groupId>com.github.javafaker</groupId>
+            <artifactId>javafaker</artifactId>
+            <version>1.0.2</version>
         </dependency>
-
+        
+        <!-- SLF4J is a required dependency for the Allure listener -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>2.0.17</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
         <plugins>
-
-            <!-- Compiler Plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -66,19 +65,35 @@
                     <target>${maven.compiler.target}</target>
                 </configuration>
             </plugin>
-
-            <!-- Surefire Plugin for TestNG -->
             <plugin>
+                <!-- This is the plugin that runs the tests -->
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.0.0-M5</version>
+                <version>${surefire.plugin.version}</version>
                 <configuration>
+                    <!-- Point Surefire to the testng.xml file -->
                     <suiteXmlFiles>
                         <suiteXmlFile>testng.xml</suiteXmlFile>
                     </suiteXmlFiles>
+                    <!-- ======================================================= -->
+                    <!-- THIS <argLine> IS THE MOST CRITICAL PART FOR ALLURE     -->
+                    <!-- It tells Surefire to use the AspectJ Weaver agent       -->
+                    <!-- ======================================================= -->
+                    <argLine>
+                        -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
+                    </argLine>
                 </configuration>
+                <dependencies>
+                    <!-- ======================================================= -->
+                    <!-- This dependency provides the AspectJ weaver to Surefire -->
+                    <!-- ======================================================= -->
+                    <dependency>
+                        <groupId>org.aspectj</groupId>
+                        <artifactId>aspectjweaver</artifactId>
+                        <version>${aspectj.version}</version>
+                    </dependency>
+                </dependencies>
             </plugin>
-
         </plugins>
     </build>
 </project>
