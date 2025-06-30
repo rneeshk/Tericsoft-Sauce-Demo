@@ -2,20 +2,20 @@
 <testng-results ignored="0" total="1" passed="1" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2025-06-30T21:48:09 IST" name="Default suite" finished-at="2025-06-30T21:48:14 IST" duration-ms="4709">
+  <suite started-at="2025-06-30T21:59:38 IST" name="Default suite" finished-at="2025-06-30T21:59:43 IST" duration-ms="5325">
     <groups>
     </groups>
-    <test started-at="2025-06-30T21:48:09 IST" name="Default test" finished-at="2025-06-30T21:48:14 IST" duration-ms="4709">
+    <test started-at="2025-06-30T21:59:38 IST" name="Default test" finished-at="2025-06-30T21:59:43 IST" duration-ms="5325">
       <class name="tests.SauceDemoE2ETest">
-        <test-method is-config="true" signature="setup()[pri:0, instance:tests.SauceDemoE2ETest@dd05255]" started-at="2025-06-30T21:48:09 IST" name="setup" finished-at="2025-06-30T21:48:11 IST" duration-ms="1402" status="PASS">
+        <test-method is-config="true" signature="setup()[pri:0, instance:tests.SauceDemoE2ETest@f339eae]" started-at="2025-06-30T21:59:38 IST" name="setup" finished-at="2025-06-30T21:59:40 IST" duration-ms="2117" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setup -->
-        <test-method signature="sauceDemoTest()[pri:0, instance:tests.SauceDemoE2ETest@dd05255]" started-at="2025-06-30T21:48:11 IST" name="sauceDemoTest" finished-at="2025-06-30T21:48:14 IST" duration-ms="2865" status="PASS">
+        <test-method signature="sauceDemoTest()[pri:0, instance:tests.SauceDemoE2ETest@f339eae]" started-at="2025-06-30T21:59:40 IST" name="sauceDemoTest" finished-at="2025-06-30T21:59:43 IST" duration-ms="2887" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- sauceDemoTest -->
-        <test-method is-config="true" signature="teardown()[pri:0, instance:tests.SauceDemoE2ETest@dd05255]" started-at="2025-06-30T21:48:14 IST" name="teardown" finished-at="2025-06-30T21:48:14 IST" duration-ms="413" status="PASS">
+        <test-method is-config="true" signature="teardown()[pri:0, instance:tests.SauceDemoE2ETest@f339eae]" started-at="2025-06-30T21:59:43 IST" name="teardown" finished-at="2025-06-30T21:59:43 IST" duration-ms="156" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- teardown -->
