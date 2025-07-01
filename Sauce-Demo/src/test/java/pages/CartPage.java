@@ -17,7 +17,7 @@ public class CartPage {
     public CartPage(WebDriver driver) {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(pageTitle)); // Wait for page to be ready
+        wait.until(ExpectedConditions.visibilityOfElementLocated(pageTitle));
     }
 
     public ProductsPage clickContinueShopping() {
@@ -31,17 +31,18 @@ public class CartPage {
     }
 
     public String getProductName(String productName) {
-        By productLocator = By.xpath("//div[@class='inventory_item_name' and text()='" + productName + "']");
+        By productLocator = By.xpath("//div[@data-test='inventory-item-name' and text()='" + productName + "']");
         return wait.until(ExpectedConditions.visibilityOfElementLocated(productLocator)).getText();
     }
 
     public String getProductPrice(String productName) {
-        By priceLocator = By.xpath("//div[text()='" + productName + "']/ancestor::div[@class='cart_item']//div[@class='inventory_item_price']");
+        By priceLocator = By.xpath("//div[text()='" + productName + "']/ancestor::div[@class='cart_item']//div[@data-test='inventory-item-price']");
         return wait.until(ExpectedConditions.visibilityOfElementLocated(priceLocator)).getText();
     }
 
     public void removeProduct(String productName) {
-        By removeButton = By.xpath("//div[text()='" + productName + "']/ancestor::div[@class='cart_item']//button");
+        String dataTestSelector = "remove-" + productName.toLowerCase().replace(" ", "-");
+        By removeButton = By.cssSelector("[data-test='" + dataTestSelector + "']");
         wait.until(ExpectedConditions.elementToBeClickable(removeButton)).click();
     }
 }

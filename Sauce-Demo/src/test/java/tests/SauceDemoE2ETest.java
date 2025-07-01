@@ -22,7 +22,6 @@ public class SauceDemoE2ETest {
 
     @BeforeTest
     public void setup() {
-        // RECTIFIED: This line now handles all driver management.
         WebDriverManager.chromedriver().setup();
 
         driver = new ChromeDriver();
@@ -81,7 +80,8 @@ public class SauceDemoE2ETest {
     private void validateCart(CartPage page, String product1, String product2) {
         Assert.assertEquals(page.getProductName(product1), product1);
         Assert.assertEquals(page.getProductPrice(product1), "$7.99");
-        Assert.assertEquals(page.getProductName(product2), product2, "$9.99");
+        Assert.assertEquals(page.getProductName(product2), product2);
+        Assert.assertEquals(page.getProductPrice(product2), "$9.99");
     }
     
     @Step("Remove {productName}, continue shopping, and re-add the product")

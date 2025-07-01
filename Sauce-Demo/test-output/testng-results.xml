@@ -2,24 +2,24 @@
 <testng-results ignored="0" total="1" passed="1" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2025-07-01T12:22:12 IST" name="SauceDemo E2E Suite" finished-at="2025-07-01T12:22:18 IST" duration-ms="6682">
+  <suite started-at="2025-07-01T13:17:24 IST" name="Default suite" finished-at="2025-07-01T13:17:29 IST" duration-ms="5477">
     <groups>
     </groups>
-    <test started-at="2025-07-01T12:22:12 IST" name="End-to-End Checkout Workflow" finished-at="2025-07-01T12:22:18 IST" duration-ms="6682">
+    <test started-at="2025-07-01T13:17:24 IST" name="Default test" finished-at="2025-07-01T13:17:29 IST" duration-ms="5477">
       <class name="tests.SauceDemoE2ETest">
-        <test-method is-config="true" signature="setup()[pri:0, instance:tests.SauceDemoE2ETest@a518813]" started-at="2025-07-01T12:22:12 IST" name="setup" finished-at="2025-07-01T12:22:15 IST" duration-ms="2958" status="PASS">
+        <test-method is-config="true" signature="setup()[pri:0, instance:tests.SauceDemoE2ETest@37af1f93]" started-at="2025-07-01T13:17:24 IST" name="setup" finished-at="2025-07-01T13:17:26 IST" duration-ms="2108" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setup -->
-        <test-method signature="sauceDemoTest()[pri:0, instance:tests.SauceDemoE2ETest@a518813]" started-at="2025-07-01T12:22:15 IST" name="sauceDemoTest" description="Validates the full checkout workflow from login to order confirmation." finished-at="2025-07-01T12:22:18 IST" duration-ms="3348" status="PASS">
+        <test-method signature="sauceDemoTest()[pri:0, instance:tests.SauceDemoE2ETest@37af1f93]" started-at="2025-07-01T13:17:26 IST" name="sauceDemoTest" description="Validates the full checkout workflow from login to order confirmation." finished-at="2025-07-01T13:17:29 IST" duration-ms="2999" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- sauceDemoTest -->
-        <test-method is-config="true" signature="teardown()[pri:0, instance:tests.SauceDemoE2ETest@a518813]" started-at="2025-07-01T12:22:18 IST" name="teardown" finished-at="2025-07-01T12:22:18 IST" duration-ms="206" status="PASS">
+        <test-method is-config="true" signature="teardown()[pri:0, instance:tests.SauceDemoE2ETest@37af1f93]" started-at="2025-07-01T13:17:29 IST" name="teardown" finished-at="2025-07-01T13:17:29 IST" duration-ms="202" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- teardown -->
       </class> <!-- tests.SauceDemoE2ETest -->
-    </test> <!-- End-to-End Checkout Workflow -->
-  </suite> <!-- SauceDemo E2E Suite -->
+    </test> <!-- Default test -->
+  </suite> <!-- Default suite -->
 </testng-results>

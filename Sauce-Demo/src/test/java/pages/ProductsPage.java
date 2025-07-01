@@ -21,26 +21,33 @@ public class ProductsPage {
     public ProductsPage(WebDriver driver) {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(pageTitle)); // Wait for page to be ready
+        wait.until(ExpectedConditions.visibilityOfElementLocated(pageTitle));
     }
-
-    public void addProductToCart(String productName) {
-        By addToCartButton = By.xpath("//div[@class='inventory_item_name ' and text()='" + productName + "']/ancestor::div[@class='inventory_item']//button[text()='Add to cart']");
-        wait.until(ExpectedConditions.elementToBeClickable(addToCartButton)).click();
-
-        By removeButton = By.xpath("//div[@class='inventory_item_name ' and text()='" + productName + "']/ancestor::div[@class='inventory_item']//button[text()='Remove']");
-        wait.until(ExpectedConditions.visibilityOfElementLocated(removeButton));
-    }
-
-    public CartPage goToCart() {
-        wait.until(ExpectedConditions.elementToBeClickable(cartLink)).click();
-        return new CartPage(driver);
+    private String formatProductNameForDataTest(String productName) {
+        return productName.toLowerCase().replace(" ", "-")
+                .replace("(", "").replace(")", "");
     }
 
     public void applyPriceLowToHighFilter() {
         WebElement dropdownElement = wait.until(ExpectedConditions.visibilityOfElementLocated(productSortDropdown));
         Select dropdown = new Select(dropdownElement);
         dropdown.selectByValue("lohi");
+        By firstItemName = By.xpath("(//div[@data-test='inventory-item-name'])[1]");
+        wait.until(ExpectedConditions.textToBe(firstItemName, "Sauce Labs Onesie"));
+    }
+
+    public void addProductToCart(String productName) {
+        String dataTestSelector = "add-to-cart-" + formatProductNameForDataTest(productName);
+        By addToCartButton = By.cssSelector("[data-test='" + dataTestSelector + "']");
+        wait.until(ExpectedConditions.elementToBeClickable(addToCartButton)).click();
+        String removeDataTestSelector = "remove-" + formatProductNameForDataTest(productName);
+        By removeButton = By.cssSelector("[data-test='" + removeDataTestSelector + "']");
+        wait.until(ExpectedConditions.visibilityOfElementLocated(removeButton));
+    }
+
+    public CartPage goToCart() {
+        wait.until(ExpectedConditions.elementToBeClickable(cartLink)).click();
+        return new CartPage(driver);
     }
 
     public void logout() {

@@ -7,9 +7,13 @@ import org.openqa.selenium.WebDriver;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
+
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Properties;
 
 public class TestListener implements ITestListener {
@@ -23,13 +27,11 @@ public class TestListener implements ITestListener {
         }
     }
 
-    // RECTIFIED: This method now uses getDeclaredField and setAccessible(true)
-    // to correctly access the private 'driver' field from the test class.
     private WebDriver getDriverFromResult(ITestResult result) {
         Object testInstance = result.getInstance();
         try {
             Field driverField = testInstance.getClass().getDeclaredField("driver");
-            driverField.setAccessible(true); // Allow access to private fields
+            driverField.setAccessible(true);
             return (WebDriver) driverField.get(testInstance);
         } catch (NoSuchFieldException | IllegalAccessException e) {
             System.err.println("Error getting WebDriver instance for screenshot: " + e.getMessage());
@@ -42,19 +44,19 @@ public class TestListener implements ITestListener {
         return ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
     }
 
-    // ENHANCEMENT: This method runs before the suite starts.
-    // It reads your environment.properties and writes it to a file
-    // that Allure understands, populating the 'Environment' widget in the report.
     @Override
     public void onStart(ITestContext context) {
         System.out.println("Writing Allure environment properties...");
-        Properties props = System.getProperties();
         try {
+            Properties props = new Properties();
             props.load(ConfigReader.class.getClassLoader().getResourceAsStream("environment.properties"));
-            FileOutputStream fos = new FileOutputStream("target/allure-results/environment.properties");
+            Path allureResultsDir = Paths.get("target", "allure-results");
+            Files.createDirectories(allureResultsDir);
+            FileOutputStream fos = new FileOutputStream(allureResultsDir.resolve("environment.properties").toFile());
             props.store(fos, "Allure Environment Properties");
             fos.close();
         } catch (IOException e) {
+            System.err.println("Failed to write Allure environment properties: " + e.getMessage());
             e.printStackTrace();
         }
     }
