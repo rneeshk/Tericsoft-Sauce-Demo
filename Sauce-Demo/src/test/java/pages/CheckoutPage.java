@@ -7,11 +7,10 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
 public class CheckoutPage {
-
     private WebDriver driver;
     private WebDriverWait wait;
 
-    // Locators
+    private By pageTitle = By.xpath("//span[@class='title' and text()='Checkout: Your Information']");
     private By firstNameField = By.id("first-name");
     private By lastNameField = By.id("last-name");
     private By zipCodeField = By.id("postal-code");
@@ -24,15 +23,9 @@ public class CheckoutPage {
     public CheckoutPage(WebDriver driver) {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(pageTitle));
     }
-    
-    public ProductsPage clickBackToHome() {
-        wait.until(ExpectedConditions.elementToBeClickable(backToHomeButton)).click();
-        By productsPageTitle = By.xpath("//span[@class='title' and text()='Products']");
-        wait.until(ExpectedConditions.visibilityOfElementLocated(productsPageTitle));
-        return new ProductsPage(driver);
-    }
-    
+
     public void enterCheckoutInformation(String firstName, String lastName, String zipCode) {
         wait.until(ExpectedConditions.visibilityOfElementLocated(firstNameField)).sendKeys(firstName);
         wait.until(ExpectedConditions.visibilityOfElementLocated(lastNameField)).sendKeys(lastName);
@@ -44,6 +37,8 @@ public class CheckoutPage {
     }
 
     public String getTotalPrice() {
+        By overviewTitle = By.xpath("//span[@class='title' and text()='Checkout: Overview']");
+        wait.until(ExpectedConditions.visibilityOfElementLocated(overviewTitle));
         return wait.until(ExpectedConditions.visibilityOfElementLocated(totalLabel)).getText();
     }
 
@@ -52,6 +47,13 @@ public class CheckoutPage {
     }
 
     public String getSuccessMessage() {
+        By thankYouTitle = By.xpath("//span[@class='title' and text()='Checkout: Complete!']");
+        wait.until(ExpectedConditions.visibilityOfElementLocated(thankYouTitle));
         return wait.until(ExpectedConditions.visibilityOfElementLocated(successMessage)).getText();
+    }
+
+    public ProductsPage clickBackToHome() {
+        wait.until(ExpectedConditions.elementToBeClickable(backToHomeButton)).click();
+        return new ProductsPage(driver);
     }
 }

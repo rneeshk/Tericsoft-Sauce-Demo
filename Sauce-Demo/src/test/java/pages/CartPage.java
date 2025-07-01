@@ -7,11 +7,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
 public class CartPage {
-
     private WebDriver driver;
     private WebDriverWait wait;
 
-    // Locators
     private By pageTitle = By.xpath("//span[@class='title' and text()='Your Cart']");
     private By checkoutButton = By.id("checkout");
     private By continueShoppingButton = By.id("continue-shopping");
@@ -19,31 +17,21 @@ public class CartPage {
     public CartPage(WebDriver driver) {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(pageTitle)); // Wait for page to be ready
     }
-    
-    public void waitForPageToLoad() {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(pageTitle));
-    }
-    
+
     public ProductsPage clickContinueShopping() {
         wait.until(ExpectedConditions.elementToBeClickable(continueShoppingButton)).click();
-        // RECTIFIED: Wait for the products page to load and return its object.
-        By productsPageTitle = By.xpath("//span[@class='title' and text()='Products']");
-        wait.until(ExpectedConditions.visibilityOfElementLocated(productsPageTitle));
         return new ProductsPage(driver);
     }
 
     public CheckoutPage clickCheckout() {
         wait.until(ExpectedConditions.elementToBeClickable(checkoutButton)).click();
-        // RECTIFIED: Wait for the checkout page to load and return its object.
-        By checkoutPageTitle = By.xpath("//span[@class='title' and text()='Checkout: Your Information']");
-        wait.until(ExpectedConditions.visibilityOfElementLocated(checkoutPageTitle));
         return new CheckoutPage(driver);
     }
 
-    // Other methods remain the same...
     public String getProductName(String productName) {
-        By productLocator = By.xpath("//div[text()='" + productName + "']");
+        By productLocator = By.xpath("//div[@class='inventory_item_name' and text()='" + productName + "']");
         return wait.until(ExpectedConditions.visibilityOfElementLocated(productLocator)).getText();
     }
 
